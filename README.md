@@ -107,3 +107,37 @@ corpus there.
 
 The emulator checks correctness only. It cannot measure speed, register use, occupancy or bank conflicts; use
 `./gpt_cuda bench` on a real GPU.
+
+## Acknowledgements
+
+Cloon Zero is written from scratch, but the ideas behind it are not. Thanks to the authors of the work below.
+
+**Architecture**
+- Vaswani et al., [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+- Zhang and Sennrich, [Root Mean Square Layer Normalization](https://arxiv.org/abs/1910.07467) (RMSNorm)
+- Su et al., [RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864) (RoPE)
+- Shazeer, [GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202) (SwiGLU)
+- Press and Wolf, [Using the Output Embedding to Improve Language Models](https://arxiv.org/abs/1608.05859) (tied embeddings)
+
+**Tokenizer**
+- Sennrich et al., [Neural Machine Translation of Rare Words with Subword Units](https://arxiv.org/abs/1508.07909) (BPE)
+
+**Optimization**
+- Loshchilov and Hutter, [Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101) (AdamW)
+- Loshchilov and Hutter, [SGDR: Stochastic Gradient Descent with Warm Restarts](https://arxiv.org/abs/1608.03983) (cosine schedule, without restarts)
+- Pascanu et al., [On the difficulty of training recurrent neural networks](https://arxiv.org/abs/1211.5063) (gradient norm clipping)
+- Jordan et al., [Muon: An optimizer for hidden layers in neural networks](https://kellerjordan.github.io/posts/muon/)
+- Liu et al., [Muon is Scalable for LLM Training](https://arxiv.org/abs/2502.16982)
+
+**Opt-in QK normalization**
+- Henry et al., [Query-Key Normalization for Transformers](https://arxiv.org/abs/2010.04245)
+- Dehghani et al., [Scaling Vision Transformers to 22 Billion Parameters](https://arxiv.org/abs/2302.05442)
+
+`QK_NORM` is a variant of these: a parameter-free RMS normalization per head, with no learned scale.
+
+**Sampling and generation**
+- Fan et al., [Hierarchical Neural Story Generation](https://arxiv.org/abs/1805.04833) (top-k)
+- Holtzman et al., [The Curious Case of Neural Text Degeneration](https://arxiv.org/abs/1904.09751) (top-p)
+- Nguyen et al., [Min P Sampling: Balancing Creativity and Coherence at High Temperature](https://arxiv.org/abs/2407.01082) (min-p)
+- Keskar et al., [CTRL](https://arxiv.org/abs/1909.05858) (repetition penalty)
+- Paulus et al., [A Deep Reinforced Model for Abstractive Summarization](https://arxiv.org/abs/1705.04304) (n-gram repetition ban)
